@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// Function to swap two integers
+
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-// Function to perform Selection Sort
+
 void selectionSort(int arr[], int n)
 {
     int i, j, min_idx;
@@ -23,17 +23,17 @@ void selectionSort(int arr[], int n)
         swap(&arr[min_idx], &arr[i]);
     }
 }
+
 int main()
 {
     int n;
     printf("Enter the number of elements: ");
     scanf("%d", &n);
     int arr[n];
-    srand(time(0)); // Seed for random number generation
-    // Generating random numbers for elements
+    srand(time(0));
     for (int i = 0; i < n; i++)
     {
-        arr[i] = rand() % 10000; // Generating random numbers between 0 and 9999
+        arr[i] = rand() % 10000;
     }
     clock_t start, end;
     double cpu_time_used;

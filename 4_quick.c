@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// Function to swap two integers
+
 void swap(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
     *b = temp;
 }
-// Function to partition the array and return the pivot index
 int partition(int arr[], int low, int high)
 {
     int pivot = arr[high];
@@ -24,7 +23,6 @@ int partition(int arr[], int low, int high)
     swap(&arr[i + 1], &arr[high]);
     return i + 1;
 }
-// Function to implement Quick Sort
 void quickSort(int arr[], int low, int high)
 {
     if (low < high)
@@ -36,25 +34,14 @@ void quickSort(int arr[], int low, int high)
 }
 int main()
 {
-    FILE *fp;
-    fp = fopen("numbers.txt", "w");
     int n;
     printf("Enter the number of elements: ");
     scanf("%d", &n);
-    srand(time(NULL));
-    for (int i = 0; i < n; i++)
-    {
-        int num = rand() % 10000;
-        fprintf(fp, "%d ", num);
-    }
-    fclose(fp);
     int arr[n];
-    fp = fopen("numbers.txt", "r");
     for (int i = 0; i < n; i++)
     {
-        fscanf(fp, "%d", &arr[i]);
+        arr[i] = rand() % 10000;
     }
-    fclose(fp);
     clock_t start, end;
     double cpu_time_used;
     start = clock();

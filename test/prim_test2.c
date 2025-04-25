@@ -15,11 +15,12 @@ int minKey(int key[],int mstSet[],int V)
             min_index=v;
         }
     }
+    return min_index;
 }
 
 void printMst(int parent[],int graph[][INT_MAX],int V)
 {
-    printf("Edge     weight\n");
+    printf("edge   weight\n");
     for(int i=1;i<V;i++)
     {
         printf("%d - %d   %d\n",parent[i],i,graph[i][parent[i]]);
@@ -29,40 +30,39 @@ void printMst(int parent[],int graph[][INT_MAX],int V)
 void primMst(int graph[][INT_MAX],int V)
 {
     int parent[INT_MAX];
-    int key[INT_MAX];
     int mstSet[INT_MAX];
+    int key[INT_MAX];
 
     for(int i=0;i<V;i++)
     {
-        key[i]=INT_MAX;
         mstSet[i]=0;
+        key[i]=INT_MAX;
     }
-
-    key[0]=0;
     parent[0]=-1;
+    key[0]=0;
 
-    for(int cnt=0;cnt<V-1;cnt++)
+    for(int cnt=0;cnt< V-1;cnt++)
     {
         int u=minKey(key,mstSet,V);
-        mstSet[u]=0;
+        mstSet[u]=1;
 
         for(int v=0;v<V;v++)
         {
-            if(graph[u][v]==1 && mstSet[v]==0 && graph[u][v]<key[v])
+            if(graph[u][v] && mstSet[v]==0 && graph[u][v]<key[v])
             {
                 parent[v]=u;
                 key[v]=graph[u][v];
             }
         }
     }
-    printMST(parent, graph, V);
+    printMst(parent,graph,V);
 }
 
 int main()
 {
     int E,V;
     printf("enter number of edges and vertices : ");
-    scanf("%d %d",&E,&V);
+    scanf("%d %d",&V,&E);
     int graph[INT_MAX][INT_MAX]={0};
     printf("enter source edge and weight : \n");
     int src,dest,weight;
@@ -72,6 +72,6 @@ int main()
         graph[src][dest]=weight;
         graph[dest][src]=weight;
     }
-    primMst(graph,V)
+    primMst(graph,V);
     
 }
