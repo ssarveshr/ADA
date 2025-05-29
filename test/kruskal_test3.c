@@ -93,7 +93,7 @@ void kruskalMst(graph* g)
     printf("min st \n");
     for(int i=0;i<e;i++)
     {
-        printf("(%d,%d) -> %d\n",mst[i].src,mst[i].dest,mst[i].weight);
+        printf("(%d,%d) -> %d\n`",mst[i].src,mst[i].dest,mst[i].weight);
     }
 }
 

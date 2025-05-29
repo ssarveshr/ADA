@@ -4,11 +4,14 @@
 #define MAX_SIZE 100
 
 // Recursive function to find all subsets with a given sum
-void subsetSum(int set[], int subset[], int n, int subSize, int total, int nodeCount, int sum) {
-    if (total == sum) {
+void subsetSum(int set[], int subset[], int n, int subSize, int total, int nodeCount, int sum)
+{
+    if (total == sum)
+    {
         // Print the subset when sum is achieved
         printf("Subset found: { ");
-        for (int i = 0; i < subSize; i++) {
+        for (int i = 0; i < subSize; i++)
+        {
             printf("%d ", subset[i]);
         }
         printf("}\n");
@@ -16,13 +19,15 @@ void subsetSum(int set[], int subset[], int n, int subSize, int total, int nodeC
     }
 
     // Explore further elements to include in the subset
-    for (int i = nodeCount; i < n; i++) {
+    for (int i = nodeCount; i < n; i++)
+    {
         subset[subSize] = set[i]; // Include current element
         subsetSum(set, subset, n, subSize + 1, total + set[i], i + 1, sum); // Recurse
     }
 }
 
-int main() {
+int main() 
+{
     int set[MAX_SIZE];
     int subset[MAX_SIZE];
     int n, sum;
@@ -46,4 +51,4 @@ int main() {
     subsetSum(set, subset, n, 0, 0, 0, sum);
 
     return 0;
-
+}
