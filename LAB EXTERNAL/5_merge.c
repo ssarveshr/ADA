@@ -1,93 +1,91 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-// Function to merge two subarrays arr[l..m] and arr[m+1..r]
-void merge(int arr[], int l, int m, int r)
+
+void merge(int array[], int left, int mid, int right)
 {
     int i, j, k;
-    int n1 = m - l + 1;
-    int n2 = r - m;
-    // Create temporary arrays
-    int L[n1], R[n2];
-    // Copy data to temporary arrays L[] and R[]
-    for (i = 0; i < n1; i++)
-        L[i] = arr[l + i];
-    for (j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-    // Merge the temporary arrays back into arr[l..r]
-    i = 0; // Initial index of first subarray
-    j = 0; // Initial index of second subarray
-    k = l; // Initial index of merged subarray
-    while (i < n1 && j < n2)
+    int leftSize = mid - left + 1;
+    int rightSize = right - mid;
+
+    int leftArray[leftSize], rightArray[rightSize];
+
+    for (i = 0; i < leftSize; i++)
+        leftArray[i] = array[left + i];
+    for (j = 0; j < rightSize; j++)
+        rightArray[j] = array[mid + 1 + j];
+
+    i = 0;
+    j = 0;
+    k = left;
+
+    while (i < leftSize && j < rightSize)
     {
-        if (L[i] <= R[j])
+        if (leftArray[i] <= rightArray[j])
         {
-            arr[k] = L[i];
+            array[k] = leftArray[i];
             i++;
         }
         else
         {
-            arr[k] = R[j];
+            array[k] = rightArray[j];
             j++;
         }
         k++;
     }
-    // Copy the remaining elements of L[], if any
-    while (i < n1)
+
+    while (i < leftSize)
     {
-        arr[k] = L[i];
+        array[k] = leftArray[i];
         i++;
         k++;
     }
-    // Copy the remaining elements of R[], if any
-    while (j < n2)
+
+    while (j < rightSize)
     {
-        arr[k] = R[j];
+        array[k] = rightArray[j];
         j++;
         k++;
     }
 }
-// Merge Sort function
-void mergeSort(int arr[], int l, int r)
+
+void mergeSort(int array[], int left, int right)
 {
-    if (l < r)
+    if (left < right)
     {
-        // Same as (l+r)/2, but avoids overflow for large l and r
-        int m = l + (r - l) / 2;
-        // Sort first and second halves
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        // Merge the sorted halves
-        merge(arr, l, m, r);
+        int mid = left + (right - left) / 2;
+
+        mergeSort(array, left, mid);
+        mergeSort(array, mid + 1, right);
+
+        merge(array, left, mid, right);
     }
 }
+
 int main()
 {
-    FILE *fp;
-    fp = fopen("numbers.txt", "w");
-    int n;
+    int numElements;
     printf("Enter the number of elements: ");
-    scanf("%d", &n);
+    scanf("%d", &numElements);
+
     srand(time(NULL));
-    for (int i = 0; i < n; i++)
+    int array[numElements];
+
+    for (int i = 0; i < numElements; i++)
     {
-        int num = rand() % 10000;
-        fprintf(fp, "%d ", num);
+        array[i] = rand() % 10000;
     }
-    fclose(fp);
-    int arr[n];
-    fp = fopen("numbers.txt", "r");
-    for (int i = 0; i < n; i++)
-    {
-        fscanf(fp, "%d", &arr[i]);
-    }
-    fclose(fp);
-    clock_t start, end;
-    double cpu_time_used;
-    start = clock();
-    mergeSort(arr, 0, n - 1);
-    end = clock();
-    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-    printf("Time taken to sort %d elements: %f seconds\n", n, cpu_time_used);
+
+    clock_t startTime, endTime;
+    double elapsedTime;
+
+    startTime = clock();
+    mergeSort(array, 0, numElements - 1);
+    endTime = clock();
+
+    elapsedTime = ((double)(endTime - startTime)) / CLOCKS_PER_SEC;
+
+    printf("Time taken to sort %d elements: %f seconds\n", numElements, elapsedTime);
+
     return 0;
 }
